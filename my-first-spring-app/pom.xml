@@ -21,13 +21,54 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>6.1.17</version>
-			<scope>compile</scope>
+			<version>6.0.20</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>6.0.20</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>1.9.22</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>6.0.20</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>6.0.20</version>
 		</dependency>
 	</dependencies>
 	
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.11.0</version> <!-- 或更高版本 -->
+				<configuration>
+					<source>1.8</source> <!-- 根据你的JDK版本调整 -->
+					<target>1.8</target>
+					<compilerArgs>
+						<!-- 关键参数：保留方法参数名 -->
+						<arg>-parameters</arg>
+						
+						<!-- 可选：保留调试信息 -->
+						<arg>-g</arg>
+						
+						<!-- 可选：禁用调试信息（如果只想用-parameters） -->
+						<!-- <arg>-g:none</arg> -->
+					</compilerArgs>
+					
+					<!-- 或者使用简化的配置方式 -->
+					<parameters>true</parameters>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -37,6 +78,9 @@
 						<phase>package</phase>
 						<goals><goal>shade</goal></goals>
 						<configuration>
+						<compilerArgs>
+							<arg>-parameters</arg>
+						</compilerArgs>
 							<!-- 过滤掉重复的 META-INF 文件 -->
 						<filters>
 							<filter>
